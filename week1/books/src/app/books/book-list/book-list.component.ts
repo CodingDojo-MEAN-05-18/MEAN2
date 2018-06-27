@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 import { Book } from '../../book';
-import { BOOKS } from '../../data/book-data';
+
+import { BookService } from '../../services';
 
 import { TitleizePipe } from '../../titleize.pipe';
 
@@ -11,17 +12,28 @@ import { TitleizePipe } from '../../titleize.pipe';
   styleUrls: ['./book-list.component.css'],
   providers: [TitleizePipe],
 })
-export class BookListComponent implements OnInit {
-  books: Array<Book> = BOOKS;
+export class BookListComponent implements OnInit, OnDestroy {
+  books: Array<Book> = [];
+  sub: Subscription;
 
   selectedBook: Book;
 
-  constructor(private titleize: TitleizePipe) {}
+  constructor(
+    private titleize: TitleizePipe,
+    private bookService: BookService
+  ) {}
 
   ngOnInit() {
-    this.books.forEach(book => {
-      book.author = this.titleize.transform(book.author);
+    this.sub = this.bookService.getBooks().subscribe(books => {
+      this.books = books;
+      this.books.forEach(book => {
+        book.author = this.titleize.transform(book.author);
+      });
     });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   onSelect(book: Book) {
@@ -39,5 +51,19 @@ export class BookListComponent implements OnInit {
   onCreate(book: Book) {
     console.log('creating book', book);
     this.books.push(book);
+  }
+
+  onClick(event: Event) {
+    event.stopPropagation();
+    console.log('stopping prop', event);
+  }
+
+  onDelete(bookToDelete: Book) {
+    console.log('deleting book');
+    this.bookService.deleteBook(bookToDelete).subscribe(deletedBook => {
+      console.log('deleted book', deletedBook);
+
+      this.books = this.books.filter(book => book.id !== deletedBook.id);
+    });
   }
 }
