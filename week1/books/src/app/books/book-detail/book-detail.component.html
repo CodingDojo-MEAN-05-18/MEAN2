@@ -1,14 +1,18 @@
-<section *ngIf='book'>
+<section>
   <fieldset>
+
+    <div *ngIf='errorMessage'>
+      <p>{{errorMessage}}</p>
+    </div>
     <legend>Selected Book</legend>
 
     <div>
-      <p>ID: {{ book.id }}</p>
-      <p>title: {{ book.title }}</p>
-      <p>author: {{ book.author }}</p>
-      <p>pages: {{ book.pages }}</p>
-      <p>year: {{ book.year }}</p>
-      <p>publisher: {{ book.publisher }}</p>
+      <p>ID: {{ book?.id }}</p>
+      <p>title: {{ book?.title }}</p>
+      <p>author: {{ book?.author }}</p>
+      <p>pages: {{ book?.pages }}</p>
+      <p>year: {{ book?.year }}</p>
+      <p>publisher: {{ book?.publisher }}</p>
     </div>
   </fieldset>
 </section>

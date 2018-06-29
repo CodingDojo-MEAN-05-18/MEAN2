@@ -10,11 +10,15 @@ import { TitleizePipe } from './titleize.pipe';
 import * as fromBooks from './books';
 import * as fromServices from './services';
 
+import { AppRoutingModule } from './app-routing.module';
+import { NavComponent } from './nav/nav.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
 // TitleizePipe.skipWords = ['of'];
 
 @NgModule({
-  declarations: [AppComponent, TitleizePipe, ...fromBooks.components],
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  declarations: [AppComponent, TitleizePipe, ...fromBooks.components, NavComponent, NotFoundComponent],
+  imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [...fromServices.services],
   bootstrap: [AppComponent],
 })
