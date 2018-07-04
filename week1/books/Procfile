@@ -1,0 +1,2 @@
+angular: ng serve -pc proxy.conf.json --open
+express: nodemon
