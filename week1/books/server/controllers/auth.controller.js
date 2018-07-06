@@ -30,8 +30,8 @@ module.exports = {
   logout(request, response) {
     request.session.destroy();
 
-    response.clearCookie('userID');
-    response.clearCookie('expiration');
+    response.clearCookie('userID', { path: '/' });
+    response.clearCookie('expiration', { path: '/' });
     response.json(true);
   },
 };

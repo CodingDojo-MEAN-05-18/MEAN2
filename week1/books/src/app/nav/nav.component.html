@@ -10,5 +10,11 @@
     <li>
       <a routerLink="books/new">Create Book</a>
     </li>
+
+    <li *ngIf='loggedIn'>
+      <button (click)=logout()>
+        Logout
+      </button>
+    </li>
   </ul>
 </nav>

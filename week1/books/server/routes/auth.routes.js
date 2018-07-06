@@ -4,4 +4,4 @@ const router = require('express').Router();
 module.exports = router
   .post('/login', authController.login)
   .post('/register', authController.register)
-  .delete('/login', authController.logout);
+  .delete('/logout', authController.logout);
