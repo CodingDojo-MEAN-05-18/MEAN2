@@ -1,4 +1,5 @@
-const bookRoute = require('./book.routes');
+const bookRoutes = require('./book.routes');
+const authRoutes = require('./auth.routes');
 const router = require('express').Router();
-
-module.exports = router.use('/books', bookRoute);
+// /api/auth/login
+module.exports = router.use('/auth', authRoutes).use('/books', bookRoutes);
