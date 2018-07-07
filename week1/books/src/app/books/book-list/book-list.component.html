@@ -18,12 +18,15 @@
         <td>{{ book.author }}</td>
         <td>{{ book.year }}</td>
         <td (click)='onClick($event)'>
-          <button (click)='onDelete(book)'>DELETE</button>
+          <button *ngIf='authed; else login' (click)='onDelete(book)'>DELETE</button>
         </td>
       </tr>
     </tbody>
   </table>
 </section>
 
+<ng-template #login>
+  <p>Login to delete</p>
+</ng-template>
 
 <!-- <app-book-detail [book]='selectedBook'></app-book-detail> -->

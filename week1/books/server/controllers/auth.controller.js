@@ -4,17 +4,19 @@ module.exports = {
   login(request, response) {
     const { email, password } = request.body;
     User.findOne({ email })
-      .then(user => {
-        if (!user) {
-          throw Error();
+      .then(async user => {
+        const valid = await User.validatePassword(password, user.password);
+
+        if (!valid) {
+          throw new Error('password do not match');
         }
 
-        return User.validatePassword(password, user.password).then(() => {
-          // handle login
-          completeLogin(request, response, user);
-        });
+        // handle login
+        completeLogin(request, response, user);
       })
-      .catch(_error => {
+      .catch(error => {
+        console.log('error message', error.message);
+
         response.status(403).json({ error: 'user/pass combo not found' });
       });
   },

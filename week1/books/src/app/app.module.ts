@@ -10,6 +10,7 @@ import { TitleizePipe } from './titleize.pipe';
 
 import * as fromBooks from './books';
 import * as fromServices from './services';
+import * as fromGuards from './guards';
 
 import { AppRoutingModule } from './app-routing.module';
 import { NavComponent } from './nav/nav.component';
@@ -38,7 +39,7 @@ import { LoginComponent } from './home/login/login.component';
     AppRoutingModule,
     CookieModule.forRoot(),
   ],
-  providers: [...fromServices.services],
+  providers: [...fromServices.services, ...fromGuards.guards],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

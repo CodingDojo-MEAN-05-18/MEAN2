@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Book } from '../../book';
 
-import { BookService } from '../../services';
+import { BookService, AuthService } from '../../services';
 
 import { TitleizePipe } from '../../titleize.pipe';
 
@@ -15,12 +15,14 @@ import { TitleizePipe } from '../../titleize.pipe';
 export class BookListComponent implements OnInit, OnDestroy {
   books: Array<Book> = [];
   sub: Subscription;
+  authed: boolean;
 
   selectedBook: Book;
 
   constructor(
     private titleize: TitleizePipe,
-    private bookService: BookService
+    private bookService: BookService,
+    private auth: AuthService
   ) {}
 
   ngOnInit() {
@@ -30,6 +32,8 @@ export class BookListComponent implements OnInit, OnDestroy {
         book.author = this.titleize.transform(book.author);
       });
     });
+
+    this.auth.authorized$.subscribe(authed => (this.authed = authed));
   }
 
   ngOnDestroy() {

@@ -5,6 +5,8 @@ import * as fromBooks from './books';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
+import * as fromGuards from './guards';
+
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +22,7 @@ const routes: Routes = [
       {
         path: 'new',
         component: fromBooks.BookNewComponent,
+        canActivate: [fromGuards.AuthGuard],
       },
       {
         path: ':id',
